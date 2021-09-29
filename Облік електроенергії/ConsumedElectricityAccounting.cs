@@ -9,12 +9,40 @@ namespace Облік_електроенергії
         public int QuarterNumber { get; private set; }
         public Flat[] Flats { get; private set; }
 
+        private string month1 = "";
+        private string month2 = "";
+        private string month3 = "";
+
         public ConsumedElectricityAccounting(string filePath)
         {
             if (string.IsNullOrWhiteSpace(filePath))
                 throw new ArgumentNullException("Шлях до файлу не може бути пустим", nameof(filePath));
 
             InitFromFile(filePath);
+
+            switch (QuarterNumber)
+            {
+                case 1:
+                    month1 = "січень";
+                    month2 = "лютий";
+                    month3 = "березень";
+                    break;
+                case 2:
+                    month1 = "квітень";
+                    month2 = "травень";
+                    month3 = "червень";
+                    break;
+                case 3:
+                    month1 = "липень";
+                    month2 = "серпень";
+                    month3 = "вересень";
+                    break;
+                case 4:
+                    month1 = "жовтень";
+                    month2 = "листопад";
+                    month3 = "грудень";
+                    break;
+            }
         }
 
         private void InitFromFile(string filePath)
@@ -53,39 +81,61 @@ namespace Облік_електроенергії
             Console.WriteLine(string.Format("Квартал: {0}", QuarterNumber));
             Console.WriteLine(string.Format("Кількість квартир на обліку: {0}\n", FlatsCount));
 
-            string month1 = "";
-            string month2 = "";
-            string month3 = "";
-
-            switch(QuarterNumber)
-            {
-                case 1:
-                    month1 = "січень";
-                    month2 = "лютий";
-                    month3 = "березень";
-                    break;
-                case 2:
-                    month1 = "квітень";
-                    month2 = "травень";
-                    month3 = "червень";
-                    break;
-                case 3:
-                    month1 = "липень";
-                    month2 = "серпень";
-                    month3 = "вересень";
-                    break;
-                case 4:
-                    month1 = "жовтень";
-                    month2 = "листопад";
-                    month3 = "грудень";
-                    break;
-            }
-
             Console.WriteLine($" {"#", -5} {"Прізвище", -20} {"Вхідний показник", -20} {month1, -10} {month2, -10} {month3, -10}");
             for (int i = 0; i < FlatsCount; i++)
             {
                 Console.WriteLine(Flats[i].ToString());
             }
+        }
+
+        public void PrintFlatInfo(int number)
+        {
+            Flat flat = null;
+            for(int i = 0; i < FlatsCount; i++)
+            {
+                if(Flats[i].Number == number)
+                {
+                    flat = Flats[i];
+                    break;
+                }
+            }
+
+            if (flat == null)
+            {
+                Console.WriteLine("Квартири з таким номером не знайдено.");
+                return;
+            }
+
+            Console.WriteLine($" {"#",-5} {"Прізвище",-20} {"Вхідний показник",-20} {month1,-10} {month2,-10} {month3,-10}");
+            Console.WriteLine(flat.ToString());
+        }
+
+        public string GetOwnerWithHighestDebt()
+        {
+            Flat flat = Flats[0];
+
+            for(int i = 1; i < FlatsCount; i++)
+            {
+                if(Flats[i].Debt > flat.Debt)
+                {
+                    flat = Flats[i];
+                }
+            }
+
+            return flat.OwnerLastName;
+        }
+
+        public int GetFlatNumberWithNoElectricityUsed()
+        {
+            for(int i = 0; i < FlatsCount; i++)
+            {
+                if(Flats[i].MeterOutput[2] - Flats[i].MeterInput == 0)
+                {
+                    return Flats[i].Number;
+                }
+            }
+
+            return 0;
         }
     }
 }

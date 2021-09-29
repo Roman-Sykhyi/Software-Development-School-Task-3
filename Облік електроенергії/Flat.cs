@@ -10,6 +10,8 @@ namespace Облік_електроенергії
         public int MeterInput { get; }
         public int[] MeterOutput { get; }
 
+        public int Debt { get { return MeterOutput[2] - MeterInput; } }
+
         public Flat(int number, string lastName, int meterInputs, int[] meterOutputs)
         {
             #region Перевірки

@@ -14,6 +14,9 @@ namespace Облік_електроенергії
             ConsumedElectricityAccounting accounting = new ConsumedElectricityAccounting(filePath);
 
             accounting.PrintReport();
+
+            Console.WriteLine("\nНайбільший борг має: " + accounting.GetOwnerWithHighestDebt());
+            Console.WriteLine("\nНомер квартири у якій не використовувалась електроенергія: " + accounting.GetFlatNumberWithNoElectricityUsed());
         }
     }
 }
