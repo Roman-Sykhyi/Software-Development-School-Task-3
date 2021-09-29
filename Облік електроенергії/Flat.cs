@@ -28,5 +28,10 @@ namespace Облік_електроенергії
             MeterInput = meterInputs;
             MeterOutput = meterOutputs;
         }
+
+        public override string ToString()
+        {
+            return $" {Number,-5} {OwnerLastName,-20} {MeterInput,-20} {MeterOutput[0],-10} {MeterOutput[1],-10} {MeterOutput[2],-10}";
+        }
     }
 }

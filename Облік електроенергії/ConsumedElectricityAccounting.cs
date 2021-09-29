@@ -47,5 +47,45 @@ namespace Облік_електроенергії
                 Flats[i] = new Flat(number, lastName, meterInput, meterOutput);
             }
         }
+
+        public void PrintReport()
+        {
+            Console.WriteLine(string.Format("Квартал: {0}", QuarterNumber));
+            Console.WriteLine(string.Format("Кількість квартир на обліку: {0}\n", FlatsCount));
+
+            string month1 = "";
+            string month2 = "";
+            string month3 = "";
+
+            switch(QuarterNumber)
+            {
+                case 1:
+                    month1 = "січень";
+                    month2 = "лютий";
+                    month3 = "березень";
+                    break;
+                case 2:
+                    month1 = "квітень";
+                    month2 = "травень";
+                    month3 = "червень";
+                    break;
+                case 3:
+                    month1 = "липень";
+                    month2 = "серпень";
+                    month3 = "вересень";
+                    break;
+                case 4:
+                    month1 = "жовтень";
+                    month2 = "листопад";
+                    month3 = "грудень";
+                    break;
+            }
+
+            Console.WriteLine($" {"#", -5} {"Прізвище", -20} {"Вхідний показник", -20} {month1, -10} {month2, -10} {month3, -10}");
+            for (int i = 0; i < FlatsCount; i++)
+            {
+                Console.WriteLine(Flats[i].ToString());
+            }
+        }
     }
 }
