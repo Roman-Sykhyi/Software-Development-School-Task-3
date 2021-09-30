@@ -15,6 +15,10 @@ namespace Облік_електроенергії
 
             accounting.PrintReport();
 
+            Console.Write("\nВведіть номер квартири для перегляду інформації: ");
+            int number = int.Parse(Console.ReadLine());
+            accounting.PrintFlatInfo(number);
+
             Console.WriteLine("\nНайбільший борг має: " + accounting.GetOwnerWithHighestDebt());
             Console.WriteLine("\nНомер квартири у якій не використовувалась електроенергія: " + accounting.GetFlatNumberWithNoElectricityUsed());
         }
